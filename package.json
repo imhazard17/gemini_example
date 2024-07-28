@@ -1,0 +1,19 @@
+{
+  "name": "gemini_example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "gemini.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Rajarshi Barman",
+  "license": "ISC",
+  "dependencies": {
+    "@google/generative-ai": "^0.16.0",
+    "dotenv": "^16.4.5",
+    "mime-types": "^2.1.35"
+  }
+}

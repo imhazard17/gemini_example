@@ -1,0 +1,3 @@
+- run `npm i`
+- Make a file `.env` and put your google api key in it with key `API_KEY` as shown in `.env.example`
+- run `node gemini.js`
