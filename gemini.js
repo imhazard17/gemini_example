@@ -1,5 +1,4 @@
 const { GoogleGenerativeAI } = require("@google/generative-ai");
-const { Console } = require("console");
 const fs = require("fs")
 require('dotenv').config()
 const mime = require('mime-types')
@@ -50,7 +49,7 @@ async function run() {
     // upload only images for image prompt and store response in docWiseReport
     let result = await chat.sendMessage([prompts['image'], ...fileParts.filter(part => part.inlineData.mimeType.startsWith('image'))]);
     let response = await result.response;
-    let docWiseReport = response.text();
+    let docWiseReport = response.text() + '\n'
 
     // upload only pdf for pdf prompt and concatinate its response to docWiseReport so it contain combined response of image and pdf prompt
     result = await chat.sendMessage([prompts['pdf'], ...fileParts.filter(part => part.inlineData.mimeType.endsWith('pdf'))]);
@@ -58,20 +57,23 @@ async function run() {
 
     docWiseReport += response.text()
     console.log('============================DOCUMENT WISE REPORTS===============================')
-    console.log(docWiseReport);
+    docWiseReport = docWiseReport.slice(8, docWiseReport.length - 4).split('\n```\n```json\n')
+    console.log(docWiseReport)
     console.log('')
 
     // upload all files (both pdfs and images) to treatment and summary prompts
     result = await chat.sendMessage([prompts['treatment'], ...fileParts]);
     response = result.response;
-    const treatmentDetails = response.text();
+    let treatmentDetails = response.text();
+    treatmentDetails = treatmentDetails.split('\n')[1]
     console.log('===========================TREATMENT DETAILS===========================')
     console.log(treatmentDetails);
     console.log('')
 
     result = await chat.sendMessage([prompts['summary'], ...fileParts]);
     response = result.response;
-    const summary = response.text();
+    let summary = response.text();
+    summary = summary.split('\n')[1]
     console.log('========================SUMMARY=============================')
     console.log(summary);
 }
