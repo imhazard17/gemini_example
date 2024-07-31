@@ -1,4 +1,5 @@
 const { GoogleGenerativeAI } = require("@google/generative-ai");
+const { Console } = require("console");
 const fs = require("fs")
 require('dotenv').config()
 const mime = require('mime-types')
